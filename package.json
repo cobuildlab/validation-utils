@@ -58,5 +58,8 @@
       "eslint src/**/*.ts --fix",
       "git add"
     ]
+  },
+  "dependencies": {
+    "moment": "^2.27.0"
   }
 }
