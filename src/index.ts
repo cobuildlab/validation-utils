@@ -57,19 +57,19 @@ export const isValidEmail = (email: string): boolean => {
 /**
  * Validate if a string is a valid number.
  *
- * @param {string} stringToTest - The string to validate as a number.
+ * @param {string|number} value - The string to validate as a number.
  * @param {boolean} [allowZero=false] - If the string should accept 0 as a valid number.
  * @param {boolean} [allowNegative=false] - If the string should negative values.
  * 
  * @returns {boolean} If the string is valid number or not.
  */
-export const isValidNumber = (stringToTest: string, allowZero: boolean = false, allowNegative: boolean = false): boolean => {
+export const isValidNumber = (value: string|number, allowZero: boolean = false, allowNegative: boolean = false): boolean => {
   const regExp = /^(-?[0-9]+)((\.|,)[0-9]+)?$/;
   
-  if (!regExp.test(stringToTest))
+  if (typeof value === 'string' && !regExp.test(value))
     return false;
 
-  const numberToTest = parseInt(stringToTest, 10);
+  const numberToTest = parseInt(value.toString(), 10);
 
   if (isNaN(numberToTest) || typeof numberToTest !== 'number') return false;
 

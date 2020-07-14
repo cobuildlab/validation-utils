@@ -58,6 +58,8 @@ test('isValidNumber', () => {
   expect(isValidNumber('-1', true, true)).toBe(true);
   expect(isValidNumber('201')).toBe(true);
   expect(isValidNumber('3.14159')).toBe(true);
+  expect(isValidNumber(452)).toBe(true);
+  expect(isValidNumber(3.1459)).toBe(true);
 });
 
 test('isValidInteger', () => {
