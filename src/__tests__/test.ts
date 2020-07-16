@@ -4,7 +4,8 @@ import {
   isValidEmail,
   isValidNumber,
   isValidInteger,
-  isValidDate
+  isValidDate,
+  isStringAValidNumber
 } from '../index';
 
 test('isNullOrUndefined:', () => {
@@ -58,8 +59,6 @@ test('isValidNumber', () => {
   expect(isValidNumber('-1', true, true)).toBe(true);
   expect(isValidNumber('201')).toBe(true);
   expect(isValidNumber('3.14159')).toBe(true);
-  expect(isValidNumber(452)).toBe(true);
-  expect(isValidNumber(3.1459)).toBe(true);
 });
 
 test('isValidInteger', () => {
@@ -81,4 +80,14 @@ test('isValidDate', () => {
   expect(isValidDate('2020-06-26', 'YYYY-MM-DD')).toBe(true);
   expect(isValidDate('Mar 25 2015', 'MMM DD YYYY')).toBe(true);
   expect(isValidDate('Tue Mar 24 2015 19:30:00', 'ddd MMM DD YYY HH:mm:ss')).toBe(true);
+})
+
+test('isStringAValidNumber', () => {
+  expect(isStringAValidNumber('')).toBe(false);
+  expect(isStringAValidNumber('Some string')).toBe(false);
+  expect(isStringAValidNumber('04939-343.643')).toBe(false);
+  
+  expect(isStringAValidNumber('2020')).toBe(true);
+  expect(isStringAValidNumber('5731')).toBe(true);
+  expect(isStringAValidNumber('3.1415')).toBe(true);
 })

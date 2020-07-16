@@ -57,19 +57,19 @@ export const isValidEmail = (email: string): boolean => {
 /**
  * Validate if a string is a valid number.
  *
- * @param {string|number} value - The string to validate as a number.
+ * @param {string} value - The string to validate as a number.
  * @param {boolean} [allowZero=false] - If the string should accept 0 as a valid number.
  * @param {boolean} [allowNegative=false] - If the string should negative values.
  * 
  * @returns {boolean} If the string is valid number or not.
  */
-export const isValidNumber = (value: string|number, allowZero: boolean = false, allowNegative: boolean = false): boolean => {
+export const isValidNumber = (value: string, allowZero: boolean = false, allowNegative: boolean = false): boolean => {
   const regExp = /^(-?[0-9]+)((\.|,)[0-9]+)?$/;
   
-  if (typeof value === 'string' && !regExp.test(value))
+  if (!regExp.test(value))
     return false;
 
-  const numberToTest = parseInt(value.toString(), 10);
+  const numberToTest = parseInt(value, 10);
 
   if (isNaN(numberToTest) || typeof numberToTest !== 'number') return false;
 
@@ -113,3 +113,19 @@ export const isValidDate = (date: string, format?: string): boolean => {
 
   return moment(date, format, true).isValid();
 };
+
+/**
+ * Validate if the provided string is a valid number
+ * 
+ * @param {string} value - The value to check
+ * 
+ * @returns {boolean} Returns if the specified value is a valid number or not
+ */
+export const isStringAValidNumber = (value: string) => {
+  if (value === '')
+    return false;
+
+  const number = Number(value);
+
+  return Number.isNaN(number) ? false : true;
+}
