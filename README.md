@@ -79,7 +79,7 @@ console.log(isValidEmail('jhondoe@gmail.com')); // true
 
 ### `isValidNumber(value, allowZero, allowNegative)`
 
-- Validates if a value of type string is a valid number
+- Validates if a value of type string or number is a valid number
 - If allowZero equals true, '0' would return true
 - If allowNegative equals true, negative values would return true
 
@@ -92,11 +92,13 @@ console.log(isValidNumber('123a424', true, true)); // false
 console.log(isValidNumber('123a424', false, true)); // false
 console.log(isValidNumber('1.23a424', false, true)); // false
 console.log(isValidNumber('123-424', false, true)); // false
-console.log(isValidNumber('0')); // false  
+console.log(isValidNumber('0')); // false
 console.log(isValidNumber('0', true)); // true
 console.log(isValidNumber('-1', true, true)); // true
 console.log(isValidNumber('201')); // true
 console.log(isValidNumber('3.14159')); // true
+console.log(isValidNumber(452)); // true
+console.log(isValidNumber(3.1459)); // true
 ```
 
 
