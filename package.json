@@ -1,6 +1,6 @@
 {
   "name": "@cobuildlab/validation-utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "This is package to deal with common scenarios working with Javascript validations",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
@@ -44,19 +44,18 @@
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
     "ts-jest": "^25.5.1",
-    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.8.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npx lint-staged",
+      "pre-push:": "npm test"
     }
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,ts}": [
       "prettier --write",
-      "eslint src/**/*.ts --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "dependencies": {

@@ -1,10 +1,13 @@
+import { test, expect } from '@jest/globals';
+
 import {
-  isNullOrUndefined, 
+  isNullOrUndefined,
   isValidString,
   isValidEmail,
   isValidNumber,
   isValidInteger,
-  isValidDate
+  isValidDate,
+  isValidFileType,
 } from '../index';
 
 test('isNullOrUndefined:', () => {
@@ -13,11 +16,10 @@ test('isNullOrUndefined:', () => {
   expect(isNullOrUndefined(true)).toBe(false);
   expect(isNullOrUndefined(false)).toBe(false);
   expect(isNullOrUndefined(1)).toBe(false);
-  expect(isNullOrUndefined("")).toBe(false);
+  expect(isNullOrUndefined('')).toBe(false);
   expect(isNullOrUndefined([])).toBe(false);
   expect(isNullOrUndefined({})).toBe(false);
 });
-
 
 test('isValidString:', () => {
   expect(isValidString(null)).toBe(false);
@@ -25,13 +27,13 @@ test('isValidString:', () => {
   expect(isValidString(true)).toBe(false);
   expect(isValidString(false)).toBe(false);
   expect(isValidString(1)).toBe(false);
-  expect(isValidString("")).toBe(false);
+  expect(isValidString('')).toBe(false);
   expect(isValidString([])).toBe(false);
   expect(isValidString({})).toBe(false);
-  expect(isValidString("Some String", true, 5)).toBe(false);
+  expect(isValidString('Some String', true, 5)).toBe(false);
 
-  expect(isValidString("Some String")).toBe(true);
-  expect(isValidString("", true)).toBe(true);
+  expect(isValidString('Some String')).toBe(true);
+  expect(isValidString('', true)).toBe(true);
 });
 
 test('isValidEmail', () => {
@@ -53,7 +55,7 @@ test('isValidNumber', () => {
   expect(isValidNumber('1.23a424', false, true)).toBe(false);
   expect(isValidNumber('123-424', false, true)).toBe(false);
   expect(isValidNumber('0')).toBe(false);
-  
+
   expect(isValidNumber('0', true)).toBe(true);
   expect(isValidNumber('-1', true, true)).toBe(true);
   expect(isValidNumber('201')).toBe(true);
@@ -64,7 +66,7 @@ test('isValidInteger', () => {
   expect(isValidInteger(3.14159)).toBe(false);
   expect(isValidInteger(0)).toBe(false);
   expect(isValidInteger(-1)).toBe(false);
-  
+
   expect(isValidInteger(0, true)).toBe(true);
   expect(isValidInteger(-1, false, true)).toBe(true);
   expect(isValidInteger(10)).toBe(true);
@@ -75,8 +77,41 @@ test('isValidDate', () => {
   expect(isValidDate('Some string')).toBe(false);
   expect(isValidDate('04939-343.643')).toBe(false);
   expect(isValidDate('2020-12-31', 'ddd MMM DD YYY HH:mm:ss')).toBe(false);
-  
+
   expect(isValidDate('2020-06-26', 'YYYY-MM-DD')).toBe(true);
   expect(isValidDate('Mar 25 2015', 'MMM DD YYYY')).toBe(true);
-  expect(isValidDate('Tue Mar 24 2015 19:30:00', 'ddd MMM DD YYY HH:mm:ss')).toBe(true);
-})
+  expect(
+    isValidDate('Tue Mar 24 2015 19:30:00', 'ddd MMM DD YYY HH:mm:ss'),
+  ).toBe(true);
+});
+
+test('isValidFileType', () => {
+  expect(
+    isValidFileType({ filename: 'filename.png', fileId: '1' }, ['pdf']),
+  ).toBe(false);
+  expect(
+    isValidFileType(
+      { mimetype: 'any/png', filename: 'filename.png', fileId: '2' },
+      ['pdf', 'jpg'],
+    ),
+  ).toBe(false);
+  expect(
+    isValidFileType(
+      { mimetype: 'any/png', filename: 'filename.png', fileId: '3' },
+      ['png'],
+    ),
+  ).toBe(true);
+  expect(
+    isValidFileType(
+      { mimetype: 'any/png', filename: 'filename.png', fileId: '4' },
+      ['pdf', 'jpg', 'png'],
+    ),
+  ).toBe(true);
+  expect(
+    isValidFileType({ filename: 'filename.png', fileId: '5' }, [
+      'pdf',
+      'jpg',
+      'png',
+    ]),
+  ).toBe(true);
+});
