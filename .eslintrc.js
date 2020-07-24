@@ -3,6 +3,7 @@ module.exports = {
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   plugins: ['jsdoc'],
   extends: [
+    'plugin:jest/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:jsdoc/recommended',
     'eslint-config-prettier',
