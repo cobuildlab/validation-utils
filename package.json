@@ -8,7 +8,7 @@
     "test": "jest --collect-coverage",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "eslint --fix"
   },
   "files": [
     "lib/**/*"
