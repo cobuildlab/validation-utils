@@ -1,10 +1,12 @@
 import * as moment from 'moment';
 
+export * from './error';
+
 /**
  * Validate if a value is `null` or `undefined`.
  *
- * @param {null|undefined|any} value - The Value to test.
- * @returns {boolean} If a value is `null` or `undefined`.
+ * @param value - The Value to test.
+ * @returns If a value is `null` or `undefined`.
  */
 export const isNullOrUndefined = (value?: any): boolean => {
   if (value === null) {
@@ -15,15 +17,21 @@ export const isNullOrUndefined = (value?: any): boolean => {
   }
   return false;
 };
+
 /**
  * Validate if a value is a valid string or not.
  *
- * @param {string} value - The value to validate.
- * @param {boolean} [allowEmpty=false] - If a empty string should be valid or not.
- * @param {number?} [size=undefined] - The maximum size of the string.
- * @returns {boolean} If the string is valid or not.
+ * @param value - The value to validate.
+ * @param allowEmpty - [allowEmpty=false] If a empty string should be valid
+ * or not.
+ * @param size - [size=undefined] The maximum size of the string.
+ * @returns If the string is valid or not.
  */
-export const isValidString = (value?: any, allowEmpty = false, size?: number): boolean => {
+export const isValidString = (
+  value?: any,
+  allowEmpty = false,
+  size?: number,
+): boolean => {
   if (isNullOrUndefined(value)) {
     return false;
   }
@@ -45,11 +53,11 @@ export const isValidString = (value?: any, allowEmpty = false, size?: number): b
 /**
  * Validate if the provided string is a valid email address.
  *
- * @param {string} email - String to validate as email.
- * @returns {boolean} Wether an email is valid or not.
+ * @param email - String to validate as email.
+ * @returns Wether an email is valid or not.
  */
 export const isValidEmail = (email: string): boolean => {
-  let emailExpression = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
+  const emailExpression = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/;
 
   return emailExpression.test(email) ? true : false;
 };
@@ -57,17 +65,20 @@ export const isValidEmail = (email: string): boolean => {
 /**
  * Validate if a string is a valid number.
  *
- * @param {string} stringToTest - The string to validate as a number.
- * @param {boolean} [allowZero=false] - If the string should accept 0 as a valid number.
- * @param {boolean} [allowNegative=false] - If the string should negative values.
- * 
- * @returns {boolean} If the string is valid number or not.
+ * @param stringToTest - The string to validate as a number.
+ * @param allowZero - [allowZero=false] If the string should accept 0 as a valid number.
+ * @param allowNegative - [allowNegative=false] If the string should negative values.
+ *
+ * @returns If the string is valid number or not.
  */
-export const isValidNumber = (stringToTest: string, allowZero: boolean = false, allowNegative: boolean = false): boolean => {
+export const isValidNumber = (
+  stringToTest: string,
+  allowZero = false,
+  allowNegative = false,
+): boolean => {
   const regExp = /^(-?[0-9]+)((\.|,)[0-9]+)?$/;
-  
-  if (!regExp.test(stringToTest))
-    return false;
+
+  if (!regExp.test(stringToTest)) return false;
 
   const numberToTest = parseInt(stringToTest, 10);
 
@@ -83,13 +94,17 @@ export const isValidNumber = (stringToTest: string, allowZero: boolean = false, 
 /**
  * Validate if a number is a valid integer.
  *
- * @param {number} numberToTest - The number to validate as integer.
- * @param {boolean} [allowZero=false] - If the number should accept 0 as a valid number.
- * @param {boolean} [allowNegative=false] - If the number should negative values.
- * 
- * @returns {boolean} If the number is a valid integer.
+ * @param numberToTest - The number to validate as integer.
+ * @param allowZero - [allowZero=false] If the number should accept 0 as a valid number.
+ * @param allowNegative - [allowNegative=false] If the number should negative values.
+ *
+ * @returns If the number is a valid integer.
  */
-export const isValidInteger = (numberToTest: number, allowZero: boolean = false, allowNegative: boolean = false): boolean => {
+export const isValidInteger = (
+  numberToTest: number,
+  allowZero = false,
+  allowNegative = false,
+): boolean => {
   if (!Number.isInteger(numberToTest)) return false;
 
   if (numberToTest === 0 && allowZero === false) return false;
@@ -102,14 +117,47 @@ export const isValidInteger = (numberToTest: number, allowZero: boolean = false,
 /**
  * Validate if the provided string is a valid Date.
  *
- * @param {string} date - string date
- * @param {string} format - The format with wich the date is going to be processed
- * 
- * @returns {boolean} is valid date
+ * @param date - String date.
+ * @param format - The format with wich the date is going to be
+ * processed.
+ *
+ * @returns Is valid date.
  */
 export const isValidDate = (date: string, format?: string): boolean => {
-  if (!format)
-    return moment(date).isValid();
+  if (!format) return moment(date).isValid();
 
   return moment(date, format, true).isValid();
+};
+
+type FileValue = {
+  id?: string;
+  fileId: string;
+  filename: string;
+  mimetype?: string;
+  download_Url?: string;
+};
+
+/**
+ * Validate if a file has a valid type/extension based on a array of valid
+ * types.
+ *
+ * @param file - The file to validate.
+ * @param validTypes - Array of valid types.
+ * @returns If the file is valid or not.
+ */
+export const isValidFileType = (
+  file: FileValue,
+  validTypes: string[],
+): boolean => {
+  const { mimetype, filename } = file;
+
+  const fileType = mimetype
+    ? mimetype.split('/')[mimetype.split('/').length - 1].toLowerCase()
+    : filename.split('.')[filename.split('.').length - 1].toLowerCase();
+
+  if (validTypes.includes(fileType)) {
+    return true;
+  }
+
+  return false;
 };
