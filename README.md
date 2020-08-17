@@ -134,3 +134,23 @@ console.log(isValidDate('2020-12-31', 'YYYY-MM-DD')); // true
 console.log(isValidDate('Mar 25 2015', 'MMM DD YYYY')); // true
 console.log(isValidDate('Tue Mar 24 2015 19:30:00', 'ddd MMM DD YYY HH:mm:ss')); // true
 ```
+
+### `isValidPhoneNumber(value)`
+
+- Validates if a value of type string is a valid phone number
+- To be a valid phone number must contain 7 digits
+- cannot contain letters or special characters between numbers, in that case return false
+- The country code is not required, but it allows you to place it
+- The allowed character is "+" at the beginning of the number to specify the country code
+
+```javascript
+console.log(isValidNumber('')); // false
+console.log(isValidNumber('abc')); // false
+console.log(isValidNumber('0414-182-552')); // false
+console.log(isValidNumber('123456')); // false
+console.log(isValidNumber('123a424'); // false
+console.log(isValidNumber('+584141822552')); // true
+console.log(isValidNumber('584141822552')); // true
+console.log(isValidNumber('04141822552')); // true
+console.log(isValidNumber('4141822552')); // true
+```
