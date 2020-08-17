@@ -8,6 +8,7 @@ import {
   isValidInteger,
   isValidDate,
   isValidFileType,
+  isValidPhoneNumber
 } from '../index';
 
 test('isNullOrUndefined:', () => {
@@ -115,3 +116,15 @@ test('isValidFileType', () => {
     ]),
   ).toBe(true);
 });
+
+test('isValidPhoneNumber', () => {
+  expect(isValidPhoneNumber('abcdefg')).toBe(false);
+  expect(isValidPhoneNumber('123456')).toBe(false);
+  expect(isValidPhoneNumber('+58-414-182-2552')).toBe(false);
+
+  expect(isValidPhoneNumber('04141822552')).toBe(true);
+  expect(isValidPhoneNumber('+584141822552')).toBe(true);
+  expect(isValidPhoneNumber('584141822552')).toBe(true);
+  expect(isValidPhoneNumber('4141822552')).toBe(true);
+});
+
