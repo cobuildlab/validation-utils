@@ -161,3 +161,18 @@ export const isValidFileType = (
 
   return false;
 };
+
+/**
+ * Validate if the provided string is a valid phone number.
+ *
+ * @param {string} number - Phone number to validate.
+ * @returns {boolean} Is valid or not.
+ */
+export const isValidPhoneNumber = (number: string ) => {
+
+  const phoneRegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+
+  return phoneRegExp.test(number);
+};
+
+
