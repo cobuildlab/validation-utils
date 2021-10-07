@@ -168,11 +168,31 @@ export const isValidFileType = (
  * @param {string} number - Phone number to validate.
  * @returns {boolean} Is valid or not.
  */
-export const isValidPhoneNumber = (number: string ) => {
-
+export const isValidPhoneNumber = (number: string) => {
   const phoneRegExp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
   return phoneRegExp.test(number);
 };
 
+/**
+ * Validates that the string provided is not larger that the max value.
+ *
+ * @example ("someString", 3)  => Error // 3 was provided, so this function will throw an error.
+ * @example ("someOtherString", 20)  => true // 20 was provided, the function will return true.
+ *
+ * @param {string} string - String to limit.
+ * @param {number} max - Maximum boundary.
+ * @returns {boolean} If the string length is lower that max.
+ */
+export const validateStringLength = (string: string, max: number) => {
+  if (typeof string !== 'string')
+    throw new Error('You must provided a valid string');
 
+  if (typeof max !== 'number')
+    throw new Error('You must provide valid maximum boundary');
+
+  if (string.length > max)
+    throw new Error('The provided string length exceed the max value');
+
+  return true;
+};
