@@ -196,3 +196,46 @@ export const validateStringLength = (string: string, max: number) => {
 
   return true;
 };
+
+/**
+ * Validates a standardized name string.
+ *
+ * @example ("Gabriel", 0, 7)  => true // This is a valid name with length 7.
+ * @example ("John", 2, 3)  => Error // John is 4 characters long.
+ * @example ("童阮", 1, 5)  => Error // Contains non-standardized characters.
+ *
+ * @param {string} name - Name to check.
+ * @param {number} minLength - Minimum boundary.
+ * @param {number} maxLength - Maximum boundary.
+ * @returns {boolean} If the name is valid and matches given criteria.
+ */
+export const isValidName = (
+  name: string,
+  minLength: number,
+  maxLength: number,
+): boolean => {
+  if (typeof name !== 'string')
+    throw new Error('You must provided a valid name string');
+
+  if (
+    typeof minLength !== 'number' ||
+    !Number.isSafeInteger(minLength) ||
+    minLength < 0
+  )
+    throw new Error('You must provide valid minimum boundary');
+
+  if (
+    typeof maxLength !== 'number' ||
+    !Number.isSafeInteger(maxLength) ||
+    maxLength < minLength
+  )
+    throw new Error('You must provide valid maximum boundary');
+
+  const expression = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]*$/;
+
+  return (
+    expression.test(name) &&
+    minLength <= name.length &&
+    name.length <= maxLength
+  );
+};

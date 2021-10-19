@@ -8,7 +8,8 @@ import {
   isValidInteger,
   isValidDate,
   isValidFileType,
-  isValidPhoneNumber
+  isValidPhoneNumber,
+  isValidName,
 } from '../index';
 
 test('isNullOrUndefined:', () => {
@@ -128,3 +129,15 @@ test('isValidPhoneNumber', () => {
   expect(isValidPhoneNumber('4141822552')).toBe(true);
 });
 
+test('isValidName', () => {
+  expect(() => isValidName('John', -1, 3)).toThrowError(
+    new Error('You must provide valid minimum boundary'),
+  );
+  expect(() => isValidName('Mike', 4, 2)).toThrowError(
+    new Error('You must provide valid maximum boundary'),
+  );
+
+  expect(isValidName('Gabriel', 0, 7)).toBe(true);
+  expect(isValidName('Angel', 2, 3)).toBe(false);
+  expect(isValidName('童阮', 1, 2)).toBe(false);
+});
